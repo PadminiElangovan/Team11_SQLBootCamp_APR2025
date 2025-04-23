@@ -33,3 +33,44 @@ ContactTitle VarChar(100) NOT Null,
 city Varchar (50) NOT Null,
 country Varchar(50) NOT Null
 );
+
+--This code is to create products table, added constraints and but cannot able import data so changed encoding in to win1252 then it worked
+
+CREATE TABLE products(
+productID INT PRIMARY KEY,
+productName VARCHAR(50) NOT NULL,
+quantityPerUnit VARCHAR(50) NOT NULL,
+unitPrice NUMERIC(8, 2) NOT NULL,
+discontinued BOOLEAN NOT NULL,
+categoryID INT, 
+FOREIGN KEY (categoryID) REFERENCES categories(categoryID)
+);
+
+
+--This code is to create orders table, added constraints and but cannot able import data so changed encoding in to win1252 then it worked
+
+CREATE TABLE orders(
+orderID INT PRIMARY KEY,
+customerID VARCHAR(10),
+FOREIGN KEY (customerID) REFERENCES customers(customerID),
+employeeID INT,
+FOREIGN KEY (employeeID) REFERENCES employees(employeeID),
+orderDate DATE NOT NULL,
+requiredDate DATE NOT NULL,
+shippedDate DATE,
+shipperID INT,
+FOREIGN KEY (shipperID) REFERENCES shippers(shipperID),
+freight NUMERIC(8, 2) NOT NULL
+);
+
+--This code is to create order_details table, added constraints and but cannot able import data so changed encoding in to win1252 then it worked
+
+CREATE TABLE order_details(
+orderID INT,
+FOREIGN KEY (orderID) REFERENCES orders(orderID),
+productID INT,
+FOREIGN KEY (productID) REFERENCES products(productID),
+unitPrice NUMERIC(8, 2) NOT NULL,
+quantity INT NOT NULL,
+discount NUMERIC(8, 2) NOT NULL
+);
