@@ -23,7 +23,7 @@ shipperID INT PRIMARY KEY,
 companyName VARCHAR(50) NOT NULL
 );
 
---This code is to create customers table, added constraints and but cannot able import data 
+--This code is to create customers table, added constraints and but cannot able import data so changed encoding in to win1252 then it worked
 
 CREATE TABLE customers(
 customerID VARCHAR(5) PRIMARY KEY,
