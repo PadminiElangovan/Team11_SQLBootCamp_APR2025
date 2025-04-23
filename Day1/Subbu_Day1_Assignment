@@ -17,3 +17,19 @@ country varchar(10) not null,
 reportsto int 
 );
 
+--This code is to create Shippers table, added constraints and imported data
+CREATE TABLE shippers(
+shipperID INT PRIMARY KEY,
+companyName VARCHAR(50) NOT NULL
+);
+
+--This code is to create customers table, added constraints and but cannot able import data 
+
+CREATE TABLE customers(
+customerID VARCHAR(5) PRIMARY KEY,
+campanyName VARCHAR(100) NOT Null ,
+contactname VARCHAR(100) NOT Null,
+ContactTitle VarChar(100) NOT Null,
+city Varchar (50) NOT Null,
+country Varchar(50) NOT Null
+);
