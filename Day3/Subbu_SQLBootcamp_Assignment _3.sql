@@ -109,4 +109,11 @@ WHEN MATCHED AND temp.discontinued = 1 THEN
     DELETE WHEN NOT MATCHED AND temp.discontinued = 0 THEN
     INSERT (product_id, product_name, quantity_per_unit, unit_price, discontinued, category_id)
     VALUES (temp.productID, temp.productName, temp.quantityPerUnit, temp.unitPrice, temp.discontinued, temp.categoryID);
+------------------------------------------------------
+ 
+7)      List all orders with employee full names. (Inner join)
+
+SELECT o.order_id, e.first_name || ' ' || e.last_name AS employeefullname
+FROM orders o
+INNER JOIN employees e ON o.employee_id = e.employee_id;
 
