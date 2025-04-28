@@ -51,3 +51,33 @@ where customer_id='VINET'
 select * from customers where customer_id='VINET';
 select * from orders where customer_id='VINET';
 ------------------------------------
+
+
+/*Q5.     Insert the following data to Products using UPSERT:
+product_id = 100, product_name = Wheat bread, quantityperunit=1,unitprice = 13, discontinued = 0, categoryID=5
+product_id = 101, product_name = White bread, quantityperunit=5 boxes,unitprice = 13, discontinued = 0, categoryID=5
+product_id = 100, product_name = Wheat bread, quantityperunit=10 boxes,unitprice = 13, discontinued = 0, categoryID=5
+(this should update the quantityperunit for product_id = 100)*/
+insert into products (product_id, product_name, quantity_per_unit,unit_price,discontinued,category_id)
+values (100,'Wheat bread',1,13,0,5),
+(101,'White bread',5,13,0,5)
+
+on conflict (product_id)
+do update 
+set product_name = EXCLUDED.product_name,
+quantity_per_unit=EXCLUDED.quantity_per_unit,
+unit_price= excluded.unit_price,
+discontinued= excluded.discontinued,
+category_id = excluded.category_id;
+
+insert into products  (product_id, product_name, quantity_per_unit,unit_price, discontinued, category_id)
+values (100,'White bread',10,13, 0,5)
+on conflict (product_id)
+do update 
+set product_name = excluded. product_name,
+quantity_per_unit =excluded. quantity_per_unit,
+unit_price = excluded.unit_price,
+discontinued = excluded.discontinued,
+category_id = excluded.category_id;
+select * from products where product_id =100 or product_id= 101 ;
+----------------------------------
