@@ -81,3 +81,32 @@ discontinued = excluded.discontinued,
 category_id = excluded.category_id;
 select * from products where product_id =100 or product_id= 101 ;
 ----------------------------------
+/* Q6.
+CREATE TEMP TABLE updated_products (
+    productID INT PRIMARY KEY,
+    productName VARCHAR(50),
+    quantityPerUnit VARCHAR(50),
+    unitPrice NUMERIC(8,2),
+    discontinued int,
+    categoryID INT
+);
+
+INSERT INTO updated_products (productID, productName, quantityPerUnit, unitPrice, discontinued, categoryID)
+VALUES 
+  (100, 'Wheat bread', '10', 20, 1, 5),
+  (101, 'White bread', '5 boxes', 19.99, 0, 5),
+  (102, 'Midnight Mango Fizz', '24 - 12 oz bottles', 19, 0, 1001),
+  (103, 'Savory Fire Sauce', '12 - 550 ml bottles', 10, 0, 2);
+
+MERGE INTO products AS actual
+USING updated_products AS temp
+ON actual.product_id = temp.productID
+WHEN MATCHED AND temp.discontinued = 0 THEN
+    UPDATE SET 
+        unit_price = temp.unitPrice,
+        discontinued = temp.discontinued
+WHEN MATCHED AND temp.discontinued = 1 THEN
+    DELETE WHEN NOT MATCHED AND temp.discontinued = 0 THEN
+    INSERT (product_id, product_name, quantity_per_unit, unit_price, discontinued, category_id)
+    VALUES (temp.productID, temp.productName, temp.quantityPerUnit, temp.unitPrice, temp.discontinued, temp.categoryID);
+
