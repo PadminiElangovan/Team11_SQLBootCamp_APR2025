@@ -52,3 +52,22 @@ inner join region r using(region_id)
 
 select * from vw_emp_details
 
+/*4.     Create a recursive CTE based on Employee Hierarchy */
+
+with recursive cte_employeeHierarchy as
+(
+select employee_id,first_name,last_name,reports_to,
+0 as level
+from employees e
+where 
+reports_to is null
+union all
+select e.employee_id,e.first_name,e.last_name,e.reports_to,
+eh.level+1
+from employees e
+join cte_employeeHierarchy eh
+on eh.employee_id=e.reports_to
+)
+select level,
+employee_id,concat(first_name,' ',last_name)employee_name
+from cte_employeeHierarchy
